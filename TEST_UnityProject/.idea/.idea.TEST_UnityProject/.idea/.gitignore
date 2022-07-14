@@ -1,0 +1,13 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/contentModel.xml
+/.idea.TEST_UnityProject.iml
+/projectSettingsUpdater.xml
+/modules.xml
+# Datasource local storage ignored files
+/../../../../../../../../../../:\Users\admin\workspace\TEST_GAMEPLAY_DEVELOPER\TEST_GAMEPLAY_DEVELOPER\TEST_UnityProject\.idea\.idea.TEST_UnityProject\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
