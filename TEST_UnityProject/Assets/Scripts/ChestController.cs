@@ -21,6 +21,8 @@ public class ChestController : MonoBehaviour, IEnemy
 
     public void OnDamage(float dmg)
     {
+        CameraController.Instance.OnDamage();
+
         HealthBarController.OnDamage(dmg);
     }
 
