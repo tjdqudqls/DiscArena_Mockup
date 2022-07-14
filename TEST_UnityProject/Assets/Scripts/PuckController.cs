@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PuckController : MonoBehaviour
 {
+    public float Damage = 25f;
     public float power = 10f;
 
     public float maxDrag = 5f;
