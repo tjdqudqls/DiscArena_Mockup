@@ -20,27 +20,39 @@ namespace DefaultNamespace
             }
 
             Instance = this;
+            StartGame();
         }
 
-
+        public void StartGame()
+        {
+            PopupController.CreatePopup("Disc Arena", "Start", ()=>{});
+        }
         public void PlacePuck(PuckType type)
         {
             Destroy(currentPuck);
+            currentPuck = Instantiate(Resources.Load("PlayerPuck") as GameObject, SpawnLocation.position, Quaternion.Euler(-90,0,0));
             switch (type)
             {
                 case PuckType.NORMAL:
                     PuckData normalData = new PuckData(25f, 10f, NormalPuckMat);
-                    currentPuck = Instantiate(PuckObj, SpawnLocation.position, Quaternion.Euler(-90,0,0));
-                    currentPuck.GetComponent<PuckController>().Init(normalData);
+                    currentPuck.GetComponent<PuckController>().Init(normalData, PlayerManager.Instance.DiscLeft);
                     break;
                 case PuckType.SPECIAL:
                     PuckData specialData = new PuckData(50f, 15f, SpecialPuckMat);
-                    currentPuck = Instantiate(PuckObj, SpawnLocation.position, Quaternion.Euler(-90,0,0));
-                    currentPuck.GetComponent<PuckController>().Init(specialData);
+                    currentPuck.GetComponent<PuckController>().Init(specialData, PlayerManager.Instance.DiscLeft);
                     break;
             }
         }
-        
-        
+
+        public void GameOver()
+        {
+            Debug.Log("GAME OVER");
+            PopupController.CreatePopup("GAME OVER", "Retry", () =>
+            {
+                Debug.Log("RETRY");
+            });
+        }
+
+
     }
 }

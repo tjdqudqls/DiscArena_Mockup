@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -9,7 +10,7 @@ public class PuckController : MonoBehaviour
 {
     private const float MINIMUM_VELOCITY = 0.3f; 
     public PuckPrediction Prediction;
-
+    public int PuckId;
     public float Damage = 25f;
     public float Speed = 10f;
     public Rigidbody rb;
@@ -19,12 +20,14 @@ public class PuckController : MonoBehaviour
     
     private Touch touch;
     private  bool dragging;
+    public bool isStopped;
     
-    public void Init(PuckData data)
+    public void Init(PuckData data, int id)
     {
         Damage = data.Damage;
         Speed = data.Speed;
         gameObject.GetComponent<MeshRenderer>().material = data.Look;
+        PuckId = id;
     }
 
     
@@ -32,13 +35,24 @@ public class PuckController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (rb.velocity.magnitude <= MINIMUM_VELOCITY)
+        if (rb.velocity.magnitude > MINIMUM_VELOCITY) //if velocity has reached above threshold then puck has been shot
+        {
+            isShot = true;
+        }
+        if (isShot && rb.velocity.magnitude <= MINIMUM_VELOCITY) //to prevent forever sliding, stop puck when velocity is under threshold
         {
             rb.velocity =Vector3.zero;
             rb.angularVelocity = Vector3.zero;
+            isStopped = true;
         }
 
-        if (isShot) return;
+        if (PuckId == 0 && isStopped) // GameOver Condition, Lastpuck and has stopped
+        {
+            LevelManager.Instance.GameOver();
+            Destroy(gameObject);
+        }
+        
+        if (isShot) return; //if shot disable control.
         #if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0))
         {
@@ -106,6 +120,5 @@ public class PuckController : MonoBehaviour
         
         rb.AddForce(clampedForce, ForceMode.Impulse);
         Prediction.ResetPrediction();
-        isShot = true;
     }
 }
