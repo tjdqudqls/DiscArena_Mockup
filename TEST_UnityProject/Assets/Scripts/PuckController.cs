@@ -3,30 +3,42 @@ using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PuckController : MonoBehaviour
 {
+    private const float MINIMUM_VELOCITY = 0.3f; 
     public PuckPrediction Prediction;
 
     public float Damage = 25f;
-    public float power = 10f;
+    public float Speed = 10f;
     public Rigidbody rb;
-
-
+    public bool isShot = false;
     public Vector3 dragStartPos;
     public Vector3 draggingPos;
+    
     private Touch touch;
-
-    public  bool dragging;
-
-
+    private  bool dragging;
+    
+    public void Init(PuckData data)
+    {
+        Damage = data.Damage;
+        Speed = data.Speed;
+        gameObject.GetComponent<MeshRenderer>().material = data.Look;
+    }
 
     
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (rb.velocity.magnitude <= MINIMUM_VELOCITY)
+        {
+            rb.velocity =Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
+        if (isShot) return;
         #if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0))
         {
@@ -90,8 +102,10 @@ public class PuckController : MonoBehaviour
     {
         Vector3 dragReleasePos = Camera.main.ScreenToViewportPoint(inputPos);
         Vector3 dir = dragStartPos - dragReleasePos;
-        Vector3 clampedForce = dir.normalized * power;
+        Vector3 clampedForce = dir.normalized * Speed;
         
         rb.AddForce(clampedForce, ForceMode.Impulse);
+        Prediction.ResetPrediction();
+        isShot = true;
     }
 }

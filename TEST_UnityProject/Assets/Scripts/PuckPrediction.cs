@@ -41,6 +41,8 @@ namespace DefaultNamespace
         public void ResetPrediction()
         {
             lineIndices.Clear();
+            Line.positionCount = 0;
+            
         }
 
     }
