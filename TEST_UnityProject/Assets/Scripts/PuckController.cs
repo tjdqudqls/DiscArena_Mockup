@@ -1,28 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
 
 public class PuckController : MonoBehaviour
 {
+    public PuckPrediction Prediction;
+
     public float Damage = 25f;
     public float power = 10f;
-
-    public float maxDrag = 5f;
-
     public Rigidbody rb;
 
-    public LineRenderer lr;
 
     public Vector3 dragStartPos;
     public Vector3 draggingPos;
     private Touch touch;
 
     public  bool dragging;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
+
+
+    
 
     // Update is called once per frame
     void Update()
@@ -74,19 +73,24 @@ public class PuckController : MonoBehaviour
     void DragStart(Vector3 inputPos)
     {
         dragStartPos = Camera.main.ScreenToViewportPoint(inputPos);
+        
+
     }
 
     void Dragging(Vector3 inputPos)
     {
-        draggingPos= Camera.main.ScreenToViewportPoint(inputPos);
         
+        draggingPos= Camera.main.ScreenToViewportPoint(inputPos);
+        // Debug.LogFormat("DRAGGING DIR {0}", dragStartPos-draggingPos);
+        Prediction.ResetPrediction();
+        Prediction.Predict(transform.position, dragStartPos - draggingPos, 10);
     }
 
     void DragRelease(Vector3 inputPos)
     {
         Vector3 dragReleasePos = Camera.main.ScreenToViewportPoint(inputPos);
-        Vector3 force = dragStartPos - dragReleasePos;
-        Vector3 clampedForce = Vector3.ClampMagnitude(force, maxDrag) * power;
+        Vector3 dir = dragStartPos - dragReleasePos;
+        Vector3 clampedForce = dir.normalized * power;
         
         rb.AddForce(clampedForce, ForceMode.Impulse);
     }
