@@ -23,9 +23,11 @@ namespace DefaultNamespace
         }
 
 
-        private void LateUpdate()
+        public void ResetPlayerState()
         {
-            
+            DiscLeft = 5;
+            hasUsedSpecialDisk = false;
+            UiManager.Instance.RestUiData();
         }
     }
 }

@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 7579670660057830374}
   m_Layer: 0
   m_Name: Chest
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -225,6 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealthBarController: {fileID: 7579670658942174929}
+  MaxHp: 2
 --- !u!1 &7579670658095601715
 GameObject:
   m_ObjectHideFlags: 0

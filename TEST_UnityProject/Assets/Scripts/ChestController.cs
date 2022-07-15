@@ -1,4 +1,5 @@
 using System;
+using DefaultNamespace;
 using UnityEngine;
 
 public class ChestController : MonoBehaviour, IEnemy
@@ -32,5 +33,6 @@ public class ChestController : MonoBehaviour, IEnemy
 
     public void OnDeath()
     {
+        LevelManager.Instance.ClearedLevel();
     }
 }
