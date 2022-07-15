@@ -819,7 +819,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &762043018
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1514,6 +1514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09e423ee2894960a5256042b56018f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentLevel: 1
   PuckObj: {fileID: 8862398277691846890, guid: 6df7b3a35b886b04d9617f26ce3c7d2d, type: 3}
   NormalPuckMat: {fileID: 2100000, guid: e4e487e8293e9bd4dba179b1e9f8d9e3, type: 2}
   SpecialPuckMat: {fileID: 2100000, guid: 4fbe6233d8ae41845bd47ae078c446c1, type: 2}

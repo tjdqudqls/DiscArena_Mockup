@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace DefaultNamespace
 {
@@ -6,6 +7,12 @@ namespace DefaultNamespace
     {
         public HealthBarController HealthBarController;
         public float MaxHp;
+        private Vector3 patrolDirection = Vector3.forward;
+        private void Update()
+        {
+            transform.Translate(patrolDirection* 4 * Time.deltaTime);
+        }
+
         public void Awake()
         {
             HealthBarController.SetMaxHealth(MaxHp);
@@ -21,6 +28,10 @@ namespace DefaultNamespace
                     OnDeath();
                 }
             }
+            else
+            {
+                patrolDirection *= -1;
+            }
         }
 
         public void OnDamage(float dmg)
@@ -31,7 +42,7 @@ namespace DefaultNamespace
 
         public void OnDeath()
         {
-            Debug.Log("DEATH");
+            Destroy(gameObject);
         }
     }
 }
