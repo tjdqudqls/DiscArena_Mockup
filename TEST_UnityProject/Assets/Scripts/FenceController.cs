@@ -1,16 +1,16 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class ChestController : MonoBehaviour, IEnemy
+public class FenceController : MonoBehaviour, IEnemy
 {
     public HealthBarController HealthBarController;
-    public float MaxHp = 2;
+    public float MaxHp;
     public void Awake()
     {
         HealthBarController.SetMaxHealth(MaxHp);
     }
-
-    // Start is called before the first frame update
+    
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.TryGetComponent(out PuckController puck))
@@ -23,7 +23,6 @@ public class ChestController : MonoBehaviour, IEnemy
         }
     }
 
-
     public void OnDamage(float dmg)
     {
         CameraController.Instance.OnDamage();
@@ -32,5 +31,6 @@ public class ChestController : MonoBehaviour, IEnemy
 
     public void OnDeath()
     {
+        Debug.Log("DEATH");
     }
 }

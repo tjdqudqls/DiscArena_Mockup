@@ -5,13 +5,18 @@ using UnityEngine.UI;
 
 public class HealthBarController : MonoBehaviour
 {
-    private const float MAX_HP = 100f;
+    private float MAX_HP = 100f;
 
-    public float Current_Hp = MAX_HP;
+    public float Current_Hp;
     [SerializeField]
     private Image healthBar;
     // Start is called before the first frame update
 
+    public void SetMaxHealth(float val)
+    {
+        MAX_HP = val;
+        Current_Hp = val;
+    }
 
     public void OnDamage(float val)
     {
