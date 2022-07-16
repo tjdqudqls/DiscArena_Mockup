@@ -7,6 +7,9 @@ namespace Editor
 {
     public class MapDataGenerator : MonoBehaviour
     {
+        /// <summary>
+        /// Generates and add level data into json by reading gameobjects in current scene.
+        /// </summary>
         [MenuItem("DiscArena/Generate Level Json")]
         static void GenerateLevelJson()
         {

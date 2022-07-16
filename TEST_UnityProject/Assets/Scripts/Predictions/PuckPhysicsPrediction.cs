@@ -12,6 +12,12 @@ namespace Predictions
 
         public PuckController puck;
         
+        /// <summary>
+        /// Predicts Puck shoot path by Physics simulations.
+        /// instantiating puck in physics scene
+        /// and draws the Line renderer according to path.
+        /// Length of prediction is determined by maxIteration
+        /// </summary>
         public void Predict()
         {
             var puckTransform = puck.transform;
@@ -32,6 +38,9 @@ namespace Predictions
             Destroy(ghost.gameObject);
         }
 
+        /// <summary>
+        /// Clear Line Renderer
+        /// </summary>
         public void ClearPrediction()
         {
             line.positionCount = 0;

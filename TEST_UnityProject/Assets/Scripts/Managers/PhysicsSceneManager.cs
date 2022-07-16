@@ -37,6 +37,10 @@ namespace Managers
                 o.Value.rotation = o.Key.rotation;
             }
         }
+        
+        /// <summary>
+        /// Creates a physics simulation scene for puck prediction.
+        /// </summary>
         void CreatePhysicsScene()
         {
             simulationScene =
@@ -50,6 +54,10 @@ namespace Managers
             }
         }
 
+        /// <summary>
+        /// Add Objects to physics scene for simulation.
+        /// </summary>
+        /// <param name="obj"></param>
         public void AddPhysicsObject(Object obj)
         {
             var go = obj as GameObject;
@@ -71,6 +79,9 @@ namespace Managers
             _inSceneEnemies.Add(go.transform, ghost.transform);
         }
 
+        /// <summary>
+        /// remove all objects from physics scene.
+        /// </summary>
         public void ClearEnemies()
         {
             foreach (var v in _inSceneEnemies)
@@ -81,6 +92,10 @@ namespace Managers
             _inSceneEnemies.Clear();
         }
 
+        /// <summary>
+        /// remove a single object from physics scene.
+        /// </summary>
+        /// <param name="e"></param>
         public void DestroyEnemy(GameObject e)
         {
             var ghost = _inSceneEnemies[e.transform];

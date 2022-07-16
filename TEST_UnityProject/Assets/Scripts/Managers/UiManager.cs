@@ -30,6 +30,12 @@ namespace Managers
             discLeftTxt.text = String.Format("{0} DISCS LEFT", PlayerManager.Instance.discLeft.ToString());
         }
 
+        /// <summary>
+        /// Called when puck select btn is clicked.
+        /// Creates a puck.
+        /// and change UI accordingly.
+        /// </summary>
+        /// <param name="type"></param>
         private void AddPuck(PuckType type)
         {
             PlayerManager.Instance.discLeft--;
@@ -48,6 +54,9 @@ namespace Managers
             }
         }
 
+        /// <summary>
+        /// Reset data
+        /// </summary>
         public void RestUiData()
         {
             normalPuckBtn.interactable = true;

@@ -7,6 +7,13 @@ namespace Predictions
     {
         public LineRenderer line;
         private readonly List<Vector3> _lineIndices = new List<Vector3>();
+        /// <summary>
+        /// Recursive method to predict puck shoot path.
+        /// used Raycasting to objects.
+        /// </summary>
+        /// <param name="startPos"></param>
+        /// <param name="dir"></param>
+        /// <param name="predictionLength"></param>
         public void Predict(Vector3 startPos, Vector3 dir, float predictionLength)
         {
             _lineIndices.Add(startPos);
@@ -30,6 +37,12 @@ namespace Predictions
             
         }
 
+        /// <summary>
+        /// Calculate the reflected raycast.
+        /// </summary>
+        /// <param name="hit"></param>
+        /// <param name="inDirection"></param>
+        /// <param name="predictionLength"></param>
         void Bounce(RaycastHit hit, Vector3 inDirection, float predictionLength)
         {
             Vector3 pos = hit.point;

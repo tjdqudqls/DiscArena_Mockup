@@ -33,6 +33,12 @@ namespace Managers
             StartNewGame();
         }
 
+        /// <summary>
+        /// Sets the level for new game.
+        /// Reset current level state to 1
+        /// Clears all Objects.
+        /// And instantiate enemies.
+        /// </summary>
         public void StartNewGame()
         {
             currentLevel = 1;
@@ -44,10 +50,22 @@ namespace Managers
             });
         }
 
+        /// <summary>
+        /// called when level is cleared.
+        /// Creates popup to move to next level.
+        /// </summary>
         public void ClearedLevel()
         {
             PopupController.CreatePopup(String.Format("LEVEL{0} CLEARED",currentLevel), "Next Level", LoadNextLevel);
         }
+        
+        /// <summary>
+        /// Increase current level
+        /// Clear current objects
+        /// Instantiate New level data.
+        /// Reset Playerdata for new level.
+        /// Check if this is last level.
+        /// </summary>
         public void LoadNextLevel()
         {
             currentLevel++;
@@ -61,6 +79,10 @@ namespace Managers
             InstantiateEnemies();
             PlayerManager.Instance.ResetPlayerState();
         }
+        /// <summary>
+        /// Instantiate a puck according to puck type.
+        /// </summary>
+        /// <param name="type"></param>
         public void PlacePuck(PuckType type)
         {
             Destroy(_currentPuck);
@@ -78,6 +100,10 @@ namespace Managers
             }
         }
 
+        /// <summary>
+        /// Called when player failed.
+        /// Creates popup to retry.
+        /// </summary>
         public void GameOver()
         {
             Debug.Log("GAME OVER");
@@ -87,6 +113,9 @@ namespace Managers
             });
         }
 
+        /// <summary>
+        /// Loads Game data from json created by map generator.
+        /// </summary>
         private void LoadGameData()
         {
 #if UNITY_EDITOR
@@ -101,6 +130,11 @@ namespace Managers
 #endif
             _gameData = JsonUtility.FromJson<GameData>(json);
         }
+        
+        /// <summary>
+        /// Populates level from GameData.
+        /// Instantiate Enemies to according positions
+        /// </summary>
         public void InstantiateEnemies()
         {
             var levelData = _gameData.levels[currentLevel - 1];
@@ -111,6 +145,9 @@ namespace Managers
             }
         }
 
+        /// <summary>
+        /// Cleans the scene
+        /// </summary>
         public void ClearObjects()
         {
             PhysicsSceneManager.Instance.ClearEnemies();

@@ -24,11 +24,13 @@ namespace Controllers
         private  bool _dragging;
         public bool isStopped;
 
-        public PuckController(Touch touch)
-        {
-            _touch = touch;
-        }
 
+        /// <summary>
+        /// Inits Puck with PuckData.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="id"></param>
+        /// <param name="ghost"></param>
         public void Init(PuckData data, int id, bool ghost = false)
         {
             damage = data.Damage;
@@ -38,6 +40,11 @@ namespace Controllers
             isGhost = ghost;
         }
 
+        /// <summary>
+        /// Inits Puck with a Puck
+        /// </summary>
+        /// <param name="puck"></param>
+        /// <param name="ghost"></param>
         public void Init(PuckController puck, bool ghost = false)
         {
             damage = puck.damage;
@@ -111,6 +118,10 @@ namespace Controllers
 #endif
         }
 
+        /// <summary>
+        /// Track of position where Drag starts
+        /// </summary>
+        /// <param name="inputPos"></param>
         void DragStart(Vector3 inputPos)
         {
             dragStartPos = Camera.main.ScreenToViewportPoint(inputPos);
@@ -118,6 +129,10 @@ namespace Controllers
 
         }
 
+        /// <summary>
+        /// Tracks position of input while dragging
+        /// </summary>
+        /// <param name="inputPos"></param>
         void Dragging(Vector3 inputPos)
         {
         
@@ -129,6 +144,10 @@ namespace Controllers
         
         }
 
+        /// <summary>
+        /// When Drag is released, calculate the direction of where the puck is shot.
+        /// </summary>
+        /// <param name="inputPos"></param>
         void DragRelease(Vector3 inputPos)
         {
             Vector3 dragReleasePos = Camera.main.ScreenToViewportPoint(inputPos);
@@ -140,6 +159,10 @@ namespace Controllers
             physicsPrediction.ClearPrediction();
         }
 
+        /// <summary>
+        /// Shoots puck at certain velocity.
+        /// </summary>
+        /// <param name="f"></param>
         public void ShootPuck(Vector3 f)
         {
             rb.AddForce(f, ForceMode.Impulse);

@@ -27,6 +27,11 @@ namespace Controllers
             StartCoroutine(Shake());
         }
 
+        /// <summary>
+        /// Coroutine to Shake Camera.
+        /// generates random vectors to move position during shake duration.
+        /// </summary>
+        /// <returns></returns>
         IEnumerator Shake()
         {
             Vector3 start = transform.position;

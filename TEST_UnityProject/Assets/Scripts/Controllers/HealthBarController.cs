@@ -9,6 +9,7 @@ namespace Controllers
 
         public float currentHp;
 
+        
         public float CurrentHpPercentage
         {
             get
@@ -20,12 +21,21 @@ namespace Controllers
         private Image healthBar;
         // Start is called before the first frame update
 
+        /// <summary>
+        /// Set max health value of HealthBar.
+        /// </summary>
+        /// <param name="val"></param>
         public void SetMaxHealth(float val)
         {
             _maxHp = val;
             currentHp = val;
         }
 
+        
+        /// <summary>
+        /// Subtracts value to current health and apply to UI.
+        /// </summary>
+        /// <param name="val"></param>
         public void OnDamage(float val)
         {
             currentHp -= val;
@@ -33,16 +43,16 @@ namespace Controllers
             healthBar.fillAmount = currentHp / _maxHp;
         }
 
+        
+        /// <summary>
+        /// Adds value to current health and apply to UI.
+        /// </summary>
+        /// <param name="val"></param>
         public void OnHeal(float val)
         {
             currentHp += val;
             currentHp = currentHp > _maxHp ? _maxHp : currentHp;
             healthBar.fillAmount = currentHp / _maxHp;
-        }
-        public void ChangeHealthValue(float val)
-        {
-        
-        
         }
     }
 }

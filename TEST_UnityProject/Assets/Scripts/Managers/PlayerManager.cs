@@ -21,6 +21,9 @@ namespace Managers
         }
 
 
+        /// <summary>
+        /// Reset Player state.
+        /// </summary>
         public void ResetPlayerState()
         {
             discLeft = 5;
