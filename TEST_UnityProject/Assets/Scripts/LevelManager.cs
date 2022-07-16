@@ -84,9 +84,16 @@ namespace DefaultNamespace
 
         private void LoadGameData()
         {
+            #if UNITY_EDITOR
             string path = Path.Combine(Application.streamingAssetsPath, "gameData.json");
-
             string json = File.ReadAllText(path);
+
+            #elif UNITY_ANDROID
+            string path = Path.Combine(Application.streamingAssetsPath, "gameData.json");
+            WWW reader = new WWW(path);
+            while (!reader.isDone) { }
+            string json = reader.text;
+            #endif
             gameData = JsonUtility.FromJson<GameData>(json);
         }
         public void InstantiateEnemies()
