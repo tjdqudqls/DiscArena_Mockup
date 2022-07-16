@@ -1,29 +1,23 @@
-﻿using System;
+﻿using Interfaces;
+using Managers;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace Controllers
 {
     public class WagonController : MonoBehaviour, IEnemy
     {
-        public HealthBarController HealthBarController
-        {
-            get => healthBarController;
-        }
-        public ParticleSystem Fire
-        {
-            get => fire;
-        }
-        public float MaxHp
-        {
-            get => maxHp;
-        }
+        public HealthBarController HealthBarController => healthBarController;
+
+        public ParticleSystem Fire => fire;
+
+        public float MaxHp => maxHp;
         public HealthBarController healthBarController;
         public ParticleSystem fire;
         public float maxHp;
-        private Vector3 patrolDirection = Vector3.forward;
+        private Vector3 _patrolDirection = Vector3.forward;
         private void Update()
         {
-            transform.Translate(patrolDirection* 4 * Time.deltaTime);
+            transform.Translate(_patrolDirection * (4 * Time.deltaTime));
         }
 
         public void Awake()
@@ -36,19 +30,19 @@ namespace DefaultNamespace
         {
             if (other.gameObject.TryGetComponent(out PuckController puck)&& !puck.isGhost)
             {
-                OnDamage(puck.Damage);
+                OnDamage(puck.damage);
                 if (HealthBarController.CurrentHpPercentage <= 0.5f)
                 {
                     Fire.Play();
                 }
-                if (HealthBarController.Current_Hp <= 0)
+                if (HealthBarController.currentHp <= 0)
                 {
                     OnDeath();
                 }
             }
             else
             {
-                patrolDirection *= -1;
+                _patrolDirection *= -1;
             }
         }
 

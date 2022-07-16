@@ -1,32 +1,31 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace Predictions
 {
     public class PuckPrediction : MonoBehaviour
     {
-        public LineRenderer Line;
-        private List<Vector3> lineIndices = new List<Vector3>();
+        public LineRenderer line;
+        private readonly List<Vector3> _lineIndices = new List<Vector3>();
         public void Predict(Vector3 startPos, Vector3 dir, float predictionLength)
         {
-            lineIndices.Add(startPos);
+            _lineIndices.Add(startPos);
 
             Ray ray = new Ray(startPos, dir);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, predictionLength))
+            if (Physics.Raycast(ray, out var hit, predictionLength))
             {
                 Bounce(hit, dir, predictionLength);
             }
             else
             {
-                lineIndices.Add(ray.GetPoint(predictionLength));
+                _lineIndices.Add(ray.GetPoint(predictionLength));
             }
 
 
-            Line.positionCount = lineIndices.Count;
-            for(int i = 0 ; i< lineIndices.Count; i++)
+            line.positionCount = _lineIndices.Count;
+            for(int i = 0 ; i< _lineIndices.Count; i++)
             {
-                Line.SetPosition(i, lineIndices[i]);
+                line.SetPosition(i, _lineIndices[i]);
             }
             
         }
@@ -40,8 +39,8 @@ namespace DefaultNamespace
 
         public void ResetPrediction()
         {
-            lineIndices.Clear();
-            Line.positionCount = 0;
+            _lineIndices.Clear();
+            line.positionCount = 0;
             
         }
 

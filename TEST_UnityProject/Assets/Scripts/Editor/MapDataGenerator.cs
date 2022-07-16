@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
+﻿using System.IO;
+using Data;
 using UnityEditor;
-namespace DefaultNamespace.Editor
+using UnityEngine;
+
+namespace Editor
 {
     public class MapDataGenerator : MonoBehaviour
     {

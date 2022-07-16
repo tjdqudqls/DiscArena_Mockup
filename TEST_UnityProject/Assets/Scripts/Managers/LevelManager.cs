@@ -1,20 +1,21 @@
 ﻿using System;
 using System.IO;
+using Controllers;
+using Data;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace Managers
 {
     public class LevelManager : MonoBehaviour
     {
-        public int CurrentLevel = 1;
+        public int currentLevel = 1;
         public static LevelManager Instance { get; private set; }
-        public GameObject PuckObj;
-        public Material NormalPuckMat;
-        public Material SpecialPuckMat;
-        public Transform SpawnLocation;
-        private GameObject currentPuck;
+        public Material normalPuckMat;
+        public Material specialPuckMat;
+        public Transform spawnLocation;
+        private GameObject _currentPuck;
 
-        private GameData gameData;
+        private GameData _gameData;
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -25,12 +26,16 @@ namespace DefaultNamespace
 
             Instance = this;
             LoadGameData();
+        }
+
+        private void Start()
+        {
             StartNewGame();
         }
 
         public void StartNewGame()
         {
-            CurrentLevel = 1;
+            currentLevel = 1;
             ClearObjects();
             PopupController.CreatePopup("Disc Arena", "Start", () =>
             {
@@ -41,12 +46,12 @@ namespace DefaultNamespace
 
         public void ClearedLevel()
         {
-            PopupController.CreatePopup(String.Format("LEVEL{0} CLEARED",CurrentLevel), "Next Level", LoadNextLevel);
+            PopupController.CreatePopup(String.Format("LEVEL{0} CLEARED",currentLevel), "Next Level", LoadNextLevel);
         }
         public void LoadNextLevel()
         {
-            CurrentLevel++;
-            if (CurrentLevel == 4)
+            currentLevel++;
+            if (currentLevel == 4)
             {
                 PopupController.CreatePopup("FINISHED!", "Retry", StartNewGame);
                 return;
@@ -58,17 +63,17 @@ namespace DefaultNamespace
         }
         public void PlacePuck(PuckType type)
         {
-            Destroy(currentPuck);
-            currentPuck = Instantiate(Resources.Load("PlayerPuck") as GameObject, SpawnLocation.position, Quaternion.Euler(-90,0,0));
+            Destroy(_currentPuck);
+            _currentPuck = Instantiate(Resources.Load("PlayerPuck") as GameObject, spawnLocation.position, Quaternion.Euler(-90,0,0));
             switch (type)
             {
-                case PuckType.NORMAL:
-                    PuckData normalData = new PuckData(25f, 30f, NormalPuckMat);
-                    currentPuck.GetComponent<PuckController>().Init(normalData, PlayerManager.Instance.DiscLeft);
+                case PuckType.Normal:
+                    PuckData normalData = new PuckData(25f, 30f, normalPuckMat);
+                    _currentPuck.GetComponent<PuckController>().Init(normalData, PlayerManager.Instance.discLeft);
                     break;
-                case PuckType.SPECIAL:
-                    PuckData specialData = new PuckData(50f, 50f, SpecialPuckMat);
-                    currentPuck.GetComponent<PuckController>().Init(specialData, PlayerManager.Instance.DiscLeft);
+                case PuckType.Special:
+                    PuckData specialData = new PuckData(50f, 50f, specialPuckMat);
+                    _currentPuck.GetComponent<PuckController>().Init(specialData, PlayerManager.Instance.discLeft);
                     break;
             }
         }
@@ -84,21 +89,21 @@ namespace DefaultNamespace
 
         private void LoadGameData()
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             string path = Path.Combine(Application.streamingAssetsPath, "gameData.json");
             string json = File.ReadAllText(path);
 
-            #elif UNITY_ANDROID
+#elif UNITY_ANDROID
             string path = Path.Combine(Application.streamingAssetsPath, "gameData.json");
             WWW reader = new WWW(path);
             while (!reader.isDone) { }
             string json = reader.text;
-            #endif
-            gameData = JsonUtility.FromJson<GameData>(json);
+#endif
+            _gameData = JsonUtility.FromJson<GameData>(json);
         }
         public void InstantiateEnemies()
         {
-            var levelData = gameData.levels[CurrentLevel - 1];
+            var levelData = _gameData.levels[currentLevel - 1];
             foreach (var e  in levelData.enemies)
             {
                 var enemy = Instantiate(Resources.Load(e.enemyPrefabName), e.position, e.rotation);

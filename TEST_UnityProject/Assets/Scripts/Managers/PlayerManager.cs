@@ -1,15 +1,13 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace DefaultNamespace
+namespace Managers
 {
     public class PlayerManager : MonoBehaviour
     {
         public static PlayerManager Instance { get; private set; }
-        public int EarnedGold = 0;
-        public int DiscLeft = 5;
+        public int discLeft = 5;
 
-        public bool hasUsedSpecialDisk = false;
+        public bool hasUsedSpecialDisk;
         
         private void Awake()
         {
@@ -25,7 +23,7 @@ namespace DefaultNamespace
 
         public void ResetPlayerState()
         {
-            DiscLeft = 5;
+            discLeft = 5;
             hasUsedSpecialDisk = false;
             UiManager.Instance.RestUiData();
         }

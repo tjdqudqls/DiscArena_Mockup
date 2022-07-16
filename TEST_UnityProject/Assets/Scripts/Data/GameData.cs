@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace Data
 {
-    [SerializeField]
     public class GameData
     {
         public List<LevelData> levels;

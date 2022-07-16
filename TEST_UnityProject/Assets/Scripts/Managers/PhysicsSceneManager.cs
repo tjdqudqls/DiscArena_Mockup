@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
-namespace DefaultNamespace
+namespace Managers
 {
     public class PhysicsSceneManager : MonoBehaviour
     {
         public static PhysicsSceneManager Instance { get; private set; }
 
-        public Scene SimulationScene;
+        public Scene simulationScene;
         public PhysicsScene PhysicsScene;
-        [SerializeField]private List<GameObject> walls = new List<GameObject>();
-        private List<GameObject> Enemies = new List<GameObject>();
-        private Dictionary<Transform, Transform> inSceneEnemies = new Dictionary<Transform, Transform>();
+        private readonly Dictionary<Transform, Transform> _inSceneEnemies = new Dictionary<Transform, Transform>();
 
         private void Awake()
         {
@@ -34,7 +31,7 @@ namespace DefaultNamespace
         
         void Update()
         {
-            foreach (var o in inSceneEnemies)
+            foreach (var o in _inSceneEnemies)
             {
                 o.Value.position = o.Key.position;
                 o.Value.rotation = o.Key.rotation;
@@ -42,14 +39,14 @@ namespace DefaultNamespace
         }
         void CreatePhysicsScene()
         {
-            SimulationScene =
+            simulationScene =
                 SceneManager.CreateScene("Simulation", new CreateSceneParameters(LocalPhysicsMode.Physics3D));var walls =GameObject.FindGameObjectsWithTag("Wall");
-            PhysicsScene = SimulationScene.GetPhysicsScene();
+            PhysicsScene = simulationScene.GetPhysicsScene();
             foreach (var w in walls)
             {
                 var ghost = Instantiate(w.gameObject, w.transform.position, w.transform.rotation);
                 ghost.GetComponent<Renderer>().enabled = false;
-                SceneManager.MoveGameObjectToScene(ghost, SimulationScene);
+                SceneManager.MoveGameObjectToScene(ghost, simulationScene);
             }
         }
 
@@ -70,24 +67,24 @@ namespace DefaultNamespace
             // fire.Stop();
             
 
-            SceneManager.MoveGameObjectToScene(ghost, SimulationScene);
-            inSceneEnemies.Add(go.transform, ghost.transform);
+            SceneManager.MoveGameObjectToScene(ghost, simulationScene);
+            _inSceneEnemies.Add(go.transform, ghost.transform);
         }
 
         public void ClearEnemies()
         {
-            foreach (var v in inSceneEnemies)
+            foreach (var v in _inSceneEnemies)
             {
                 var g = v.Value;
                 Destroy(g.gameObject);
             }
-            inSceneEnemies.Clear();
+            _inSceneEnemies.Clear();
         }
 
         public void DestroyEnemy(GameObject e)
         {
-            var ghost = inSceneEnemies[e.transform];
-            inSceneEnemies.Remove(e.transform);
+            var ghost = _inSceneEnemies[e.transform];
+            _inSceneEnemies.Remove(e.transform);
             Destroy(ghost.gameObject);
         }
     }
