@@ -24,9 +24,12 @@ public class UiManager : MonoBehaviour
         Instance = this;
         NormalPuckBtn.onClick.AddListener(() =>AddPuck(PuckType.NORMAL));
         SpecialPuckBtn.onClick.AddListener(() =>AddPuck(PuckType.SPECIAL));
-        DiscLeftTxt.text = String.Format("{0} DISCS LEFT", PlayerManager.Instance.DiscLeft.ToString());
     }
 
+    private void Start()
+    {
+        DiscLeftTxt.text = String.Format("{0} DISCS LEFT", PlayerManager.Instance.DiscLeft.ToString());
+    }
 
     private void AddPuck(PuckType type)
     {

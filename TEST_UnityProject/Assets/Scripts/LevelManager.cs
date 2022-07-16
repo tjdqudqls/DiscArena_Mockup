@@ -63,11 +63,11 @@ namespace DefaultNamespace
             switch (type)
             {
                 case PuckType.NORMAL:
-                    PuckData normalData = new PuckData(25f, 10f, NormalPuckMat);
+                    PuckData normalData = new PuckData(25f, 30f, NormalPuckMat);
                     currentPuck.GetComponent<PuckController>().Init(normalData, PlayerManager.Instance.DiscLeft);
                     break;
                 case PuckType.SPECIAL:
-                    PuckData specialData = new PuckData(50f, 15f, SpecialPuckMat);
+                    PuckData specialData = new PuckData(50f, 50f, SpecialPuckMat);
                     currentPuck.GetComponent<PuckController>().Init(specialData, PlayerManager.Instance.DiscLeft);
                     break;
             }
@@ -101,12 +101,14 @@ namespace DefaultNamespace
             var levelData = gameData.levels[CurrentLevel - 1];
             foreach (var e  in levelData.enemies)
             {
-                Instantiate(Resources.Load(e.enemyPrefabName), e.position, e.rotation);
+                var enemy = Instantiate(Resources.Load(e.enemyPrefabName), e.position, e.rotation);
+                PhysicsSceneManager.Instance.AddPhysicsObject(enemy);
             }
         }
 
         public void ClearObjects()
         {
+            PhysicsSceneManager.Instance.ClearEnemies();
             var enemies = GameObject.FindGameObjectsWithTag("Enemy");
             foreach (var e in enemies)
             {

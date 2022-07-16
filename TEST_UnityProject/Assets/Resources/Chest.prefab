@@ -224,8 +224,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 384f9f4c11d33c949b50d37fe0273c99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealthBarController: {fileID: 7579670658942174929}
-  MaxHp: 2
+  healthBarController: {fileID: 7579670658942174929}
+  maxHp: 2
 --- !u!1 &7579670658095601715
 GameObject:
   m_ObjectHideFlags: 0

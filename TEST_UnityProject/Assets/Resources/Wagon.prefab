@@ -419,9 +419,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f67998f4c154e1f93dfc4431ce7c623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealthBarController: {fileID: 2785192138057893563}
-  Fire: {fileID: 5640859663901069187}
-  MaxHp: 50
+  healthBarController: {fileID: 2785192138057893563}
+  fire: {fileID: 5640859663901069187}
+  maxHp: 0
 --- !u!54 &4263373929202625603
 Rigidbody:
   m_ObjectHideFlags: 0

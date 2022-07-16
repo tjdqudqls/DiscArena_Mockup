@@ -4,8 +4,20 @@ using UnityEngine;
 
 public class ChestController : MonoBehaviour, IEnemy
 {
-    public HealthBarController HealthBarController;
-    public float MaxHp = 2;
+    public HealthBarController HealthBarController
+    {
+        get => healthBarController;
+    }
+    public ParticleSystem Fire
+    {
+        get => null;
+    }
+    public float MaxHp
+    {
+        get => maxHp;
+    }
+    public HealthBarController healthBarController;
+    public float maxHp = 2;
     public void Awake()
     {
         HealthBarController.SetMaxHealth(MaxHp);
@@ -14,7 +26,7 @@ public class ChestController : MonoBehaviour, IEnemy
     // Start is called before the first frame update
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.TryGetComponent(out PuckController puck))
+        if (other.gameObject.TryGetComponent(out PuckController puck) && !puck.isGhost)
         {
             OnDamage(puck.Damage);
             if (HealthBarController.Current_Hp <= 0)
@@ -33,6 +45,7 @@ public class ChestController : MonoBehaviour, IEnemy
 
     public void OnDeath()
     {
+        PhysicsSceneManager.Instance.DestroyEnemy(gameObject);
         LevelManager.Instance.ClearedLevel();
     }
 }

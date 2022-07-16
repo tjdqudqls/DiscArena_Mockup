@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8193807953689274960}
   - component: {fileID: 8519959020820399640}
-  - component: {fileID: 919132147757564201}
+  - component: {fileID: 8437220280085756916}
   - component: {fileID: 5051239425013736949}
   - component: {fileID: 7060918776303489343}
   - component: {fileID: 8519959020820399642}
@@ -49,7 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ed2c1422cf225b42b5b0b6a54d1881e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Prediction: {fileID: 919132147757564201}
+  PhysicsPrediction: {fileID: 8437220280085756916}
+  MeshRenderer: {fileID: 7060918776303489343}
   PuckId: 0
   Damage: 25
   Speed: 10
@@ -57,8 +58,9 @@ MonoBehaviour:
   isShot: 0
   dragStartPos: {x: 0, y: 0, z: 0}
   draggingPos: {x: 0, y: 0, z: 0}
+  isGhost: 0
   isStopped: 0
---- !u!114 &919132147757564201
+--- !u!114 &8437220280085756916
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -67,10 +69,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8862398277691846890}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4130a68f7c54a6995e6da84f9483a19, type: 3}
+  m_Script: {fileID: 11500000, guid: 1126e50fa21345c5868ce07a6c4ce5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Line: {fileID: 919132147757564200}
+  MaxIteration: 20
+  Puck: {fileID: 8519959020820399640}
 --- !u!33 &5051239425013736949
 MeshFilter:
   m_ObjectHideFlags: 0

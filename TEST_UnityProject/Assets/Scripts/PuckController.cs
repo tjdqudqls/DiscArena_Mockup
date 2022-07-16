@@ -9,7 +9,9 @@ using UnityEngine.Serialization;
 public class PuckController : MonoBehaviour
 {
     private const float MINIMUM_VELOCITY = 0.3f; 
-    public PuckPrediction Prediction;
+    // public PuckPrediction Prediction;
+    public PuckPhysicsPrediction PhysicsPrediction;
+    public MeshRenderer MeshRenderer;
     public int PuckId;
     public float Damage = 25f;
     public float Speed = 10f;
@@ -17,19 +19,28 @@ public class PuckController : MonoBehaviour
     public bool isShot = false;
     public Vector3 dragStartPos;
     public Vector3 draggingPos;
-    
+    public bool isGhost = false;
+
     private Touch touch;
     private  bool dragging;
     public bool isStopped;
-    
-    public void Init(PuckData data, int id)
+    public void Init(PuckData data, int id, bool ghost = false)
     {
         Damage = data.Damage;
         Speed = data.Speed;
-        gameObject.GetComponent<MeshRenderer>().material = data.Look;
+        MeshRenderer.material = data.Look;
         PuckId = id;
+        isGhost = ghost;
     }
 
+    public void Init(PuckController puck, bool ghost = false)
+    {
+        Damage = puck.Damage;
+        Speed = puck.Speed;
+        MeshRenderer.material = puck.MeshRenderer.material;
+        PuckId = puck.PuckId;
+        isGhost = ghost;
+    }
     
 
     // Update is called once per frame
@@ -108,8 +119,10 @@ public class PuckController : MonoBehaviour
         
         draggingPos= Camera.main.ScreenToViewportPoint(inputPos);
         // Debug.LogFormat("DRAGGING DIR {0}", dragStartPos-draggingPos);
-        Prediction.ResetPrediction();
-        Prediction.Predict(transform.position, dragStartPos - draggingPos, 10);
+        // Prediction.ResetPrediction();
+        //Prediction.Predict(transform.position, dragStartPos - draggingPos, 10);
+        PhysicsPrediction.Predict();
+        
     }
 
     void DragRelease(Vector3 inputPos)
@@ -118,7 +131,13 @@ public class PuckController : MonoBehaviour
         Vector3 dir = dragStartPos - dragReleasePos;
         Vector3 clampedForce = dir.normalized * Speed;
         
-        rb.AddForce(clampedForce, ForceMode.Impulse);
-        Prediction.ResetPrediction();
+        ShootPuck(clampedForce);
+        // Prediction.ResetPrediction();
+        PhysicsPrediction.ClearPrediction();
+    }
+
+    public void ShootPuck(Vector3 f)
+    {
+        rb.AddForce(f, ForceMode.Impulse);
     }
 }

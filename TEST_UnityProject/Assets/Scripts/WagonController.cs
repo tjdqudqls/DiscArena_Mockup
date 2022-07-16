@@ -5,9 +5,21 @@ namespace DefaultNamespace
 {
     public class WagonController : MonoBehaviour, IEnemy
     {
-        public HealthBarController HealthBarController;
-        public ParticleSystem Fire;
-        public float MaxHp;
+        public HealthBarController HealthBarController
+        {
+            get => healthBarController;
+        }
+        public ParticleSystem Fire
+        {
+            get => fire;
+        }
+        public float MaxHp
+        {
+            get => maxHp;
+        }
+        public HealthBarController healthBarController;
+        public ParticleSystem fire;
+        public float maxHp;
         private Vector3 patrolDirection = Vector3.forward;
         private void Update()
         {
@@ -22,7 +34,7 @@ namespace DefaultNamespace
     
         private void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.TryGetComponent(out PuckController puck))
+            if (other.gameObject.TryGetComponent(out PuckController puck)&& !puck.isGhost)
             {
                 OnDamage(puck.Damage);
                 if (HealthBarController.CurrentHpPercentage <= 0.5f)
@@ -40,6 +52,8 @@ namespace DefaultNamespace
             }
         }
 
+
+
         public void OnDamage(float dmg)
         {
             CameraController.Instance.OnDamage();
@@ -48,6 +62,7 @@ namespace DefaultNamespace
 
         public void OnDeath()
         {
+            PhysicsSceneManager.Instance.DestroyEnemy(gameObject);
             Destroy(gameObject);
         }
     }
