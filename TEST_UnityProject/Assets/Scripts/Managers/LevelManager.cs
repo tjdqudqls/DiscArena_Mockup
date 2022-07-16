@@ -106,10 +106,9 @@ namespace Managers
         /// </summary>
         public void GameOver()
         {
-            Debug.Log("GAME OVER");
             PopupController.CreatePopup("GAME OVER", "Retry", () =>
             {
-                Debug.Log("RETRY");
+                StartNewGame();
             });
         }
 
