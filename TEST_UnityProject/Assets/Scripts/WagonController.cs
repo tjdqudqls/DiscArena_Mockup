@@ -6,6 +6,7 @@ namespace DefaultNamespace
     public class WagonController : MonoBehaviour, IEnemy
     {
         public HealthBarController HealthBarController;
+        public ParticleSystem Fire;
         public float MaxHp;
         private Vector3 patrolDirection = Vector3.forward;
         private void Update()
@@ -16,6 +17,7 @@ namespace DefaultNamespace
         public void Awake()
         {
             HealthBarController.SetMaxHealth(MaxHp);
+            Fire.Stop();
         }
     
         private void OnCollisionEnter(Collision other)
@@ -23,6 +25,10 @@ namespace DefaultNamespace
             if (other.gameObject.TryGetComponent(out PuckController puck))
             {
                 OnDamage(puck.Damage);
+                if (HealthBarController.CurrentHpPercentage <= 0.5f)
+                {
+                    Fire.Play();
+                }
                 if (HealthBarController.Current_Hp <= 0)
                 {
                     OnDeath();

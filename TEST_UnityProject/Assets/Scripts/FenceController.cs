@@ -5,10 +5,12 @@ using UnityEngine;
 public class FenceController : MonoBehaviour, IEnemy
 {
     public HealthBarController HealthBarController;
+    public ParticleSystem Fire;
     public float MaxHp;
     public void Awake()
     {
         HealthBarController.SetMaxHealth(MaxHp);
+        Fire.Stop();
     }
     
     private void OnCollisionEnter(Collision other)
@@ -16,6 +18,11 @@ public class FenceController : MonoBehaviour, IEnemy
         if (other.gameObject.TryGetComponent(out PuckController puck))
         {
             OnDamage(puck.Damage);
+
+            if (HealthBarController.CurrentHpPercentage <= 0.5f)
+            {
+                Fire.Play();
+            }
             if (HealthBarController.Current_Hp <= 0)
             {
                 OnDeath();
@@ -32,5 +39,6 @@ public class FenceController : MonoBehaviour, IEnemy
     public void OnDeath()
     {
         Debug.Log("DEATH");
+        Destroy(gameObject);
     }
 }

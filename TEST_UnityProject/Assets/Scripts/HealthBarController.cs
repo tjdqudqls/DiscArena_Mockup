@@ -8,6 +8,14 @@ public class HealthBarController : MonoBehaviour
     private float MAX_HP = 100f;
 
     public float Current_Hp;
+
+    public float CurrentHpPercentage
+    {
+        get
+        {
+            return Current_Hp / MAX_HP;
+        }
+    }
     [SerializeField]
     private Image healthBar;
     // Start is called before the first frame update
