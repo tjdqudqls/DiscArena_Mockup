@@ -92,21 +92,20 @@ namespace Controllers
 #else
         if (Input.touchCount > 0)
         {
-            Debug.Log("TOUCHED");
-            touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
+            _touch = Input.GetTouch(0);
+            if (_touch.phase == TouchPhase.Began)
             {
-                DragStart(touch.position);
+                DragStart(_touch.position);
             }
 
-            if (touch.phase == TouchPhase.Moved)
+            if (_touch.phase == TouchPhase.Moved)
             {
-                Dragging(touch.position);
+                Dragging(_touch.position);
             }
 
-            if (touch.phase == TouchPhase.Ended)
+            if (_touch.phase == TouchPhase.Ended)
             {
-                DragRelease(touch.position);
+                DragRelease(_touch.position);
             }
         }
 #endif

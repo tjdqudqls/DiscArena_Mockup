@@ -809,9 +809,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1295088249}
+  - component: {fileID: 1295088252}
   - component: {fileID: 1295088251}
   - component: {fileID: 1295088250}
-  - component: {fileID: 1295088252}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -861,7 +861,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4131f9803384a6b89129bd68c1978c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  earnedGold: 0
   discLeft: 5
   hasUsedSpecialDisk: 0
 --- !u!114 &1295088252
